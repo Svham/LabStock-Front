@@ -1,0 +1,66 @@
+<div class="container mt-4" style="max-width: 600px;">
+  <h2 class="mb-4">{{ modoEdicao ? 'Editar Item' : 'Novo Item' }}</h2>
+
+  <div *ngIf="erro" class="alert alert-danger">{{ erro }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+
+    <!-- Nome -->
+    <div class="form-outline mb-4" mdbFormControl>
+    <input
+        type="text"
+        id="name"
+        class="form-control"
+        formControlName="name"
+        mdbInput
+    />
+    <label class="form-label" for="name" mdbLabel>Nome do item</label>
+    </div>
+
+    <!-- Categoria -->
+    <div class="form-outline mb-4" mdbFormControl>
+      <select class="form-select" id="category" formControlName="category">
+        <option value="" disabled selected>Selecione a categoria</option>
+        <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+      </select>
+    </div>
+
+    <!-- Quantidade -->
+    <div class="form-outline mb-4" mdbFormControl>
+        <input
+            type="number"
+            id="quantity"
+            class="form-control"
+            formControlName="quantity"
+            min="0"
+            mdbInput
+        />
+        <label class="form-label" for="quantity" mdbLabel>Quantidade total em estoque</label>
+    </div>
+
+      <!-- Mínimo -->
+    <div class="form-outline mb-4" mdbFormControl>
+        <input
+            type="number"
+            id="minQuantity"
+            class="form-control"
+            formControlName="minQuantity"
+            min="0"
+            mdbInput
+        />
+        <label class="form-label" for="minQuantity" mdbLabel>Estoque mínimo</label>
+</div>
+
+  <!-- Ações -->
+    <div class="d-flex justify-content-end gap-2 mt-4">
+        <button type="button" class="btn btn-outline-secondary" mdbRipple (click)="cancelar()">
+            <i class="fas fa-times me-1"></i>
+                Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary" mdbRipple [disabled]="salvando">
+            <i class="fas" [class.fa-spinner]="salvando" [class.fa-spin]="salvando" [class.fa-save]="!salvando"></i>
+                    {{ salvando ? 'Salvando...' : (modoEdicao ? 'Salvar alterações' : 'Cadastrar') }}
+        </button>
+    </div>
+  </form>
+</div>

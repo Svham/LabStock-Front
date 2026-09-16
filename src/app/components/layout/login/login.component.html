@@ -1,0 +1,33 @@
+<div class="background">
+    
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-4 centralizar topo">
+
+            <div class="card" style="width: 18rem;">
+  <img src="https://i.ytimg.com/vi/RvBNw8OheyU/maxresdefault.jpg" class="card-img-top" alt="Chicago Skyscrapers"/>
+  <div class="card-body">
+    <br>
+    <h1 class="card-title">LabStock</h1>
+    <br>
+    <br>
+    <h2 class="card-title2">Login</h2>
+    <br>
+    <mdb-form-control>
+  <input mdbInput type="text" id="Usuario" class="form-control"  [(ngModel)]="usuario"/>
+  <label mdbLabel class="form-label" for="Usuario">Usuario</label>
+    </mdb-form-control>
+
+    <br>
+
+    <mdb-form-control>
+  <input mdbInput type="password" id="Senha" class="form-control" [(ngModel)]="senha"/>
+  <label mdbLabel class="form-label" for="Senha">Senha</label>
+    </mdb-form-control>
+
+    <br>
+
+    <button type="button" class="btn btn-primary" mdbRipple (click)="logar()">Logar</button>
+    </div>
+</div>

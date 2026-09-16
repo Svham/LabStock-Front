@@ -1,0 +1,103 @@
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Items</h2>
+    <a *ngIf="isLab" routerLink="new" class="btn btn-primary" mdbRipple>
+      + Novo Item
+    </a>
+  </div>
+
+  <!-- Filtros -->
+  <div class="row mb-4 g-3">
+    <div class="col-md-6">
+      <div class="form-outline" mdbFormControl>
+        <input
+            type="text"
+            id="filtroNome"
+            class="form-control"
+            [(ngModel)]="filtroNome"
+            (keyup.enter)="aplicarFiltro()"
+            mdbInput
+  />
+  <label class="form-label" for="filtroNome" mdbLabel>Buscar por nome</label>
+</div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-outline" mdbFormControl>
+        <select
+          class="form-select"
+          id="filtroCategoria"
+          [(ngModel)]="filtroCategoria"
+          (change)="aplicarFiltro()"
+        >
+          <option value="">Todas as categorias</option>
+          <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <button class="btn btn-outline-primary w-100" mdbRipple (click)="aplicarFiltro()">
+        Filtrar
+      </button>
+    </div>
+  </div>
+
+  <!-- Lista -->
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Nome</th>
+          <th>Categoria</th>
+          <th>Qtd. Total</th>
+          <th>Disponível</th>
+          <th>Mínimo</th>
+          <th>Status</th>
+          <th *ngIf="isLab">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items" [class.table-secondary]="item.isInactive">
+          <td>{{ item.name }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>
+            <span [class.text-danger]="item.availableQuantity < item.minQuantity">
+              {{ item.availableQuantity }}
+            </span>
+          </td>
+          <td>{{ item.minQuantity }}</td>
+          <td>
+            <span class="badge" [class.bg-success]="!item.isInactive" [class.bg-secondary]="item.isInactive">
+              {{ item.isInactive ? 'Inativo' : 'Ativo' }}
+            </span>
+          </td>
+          <td *ngIf="isLab">
+            <a [routerLink]="['edit', item.id]" class="btn btn-sm btn-outline-secondary me-1" mdbRipple>
+              Editar
+            </a>
+            <button class="btn btn-sm btn-outline-warning me-1" mdbRipple (click)="toggleInativar(item)">
+              {{ item.isInactive ? 'Ativar' : 'Inativar' }}
+            </button>
+            <button class="btn btn-sm btn-outline-danger" mdbRipple (click)="deletar(item)">
+              Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Loading / fim da lista -->
+  <div class="text-center my-3">
+    <div *ngIf="carregando" class="spinner-border text-primary" role="status"></div>
+    <p *ngIf="!carregando && fimDaLista && items.length > 0" class="text-muted">
+      Fim da lista.
+    </p>
+    <p *ngIf="!carregando && items.length === 0" class="text-muted">
+      Nenhum item encontrado.
+    </p>
+  </div>
+</div>
