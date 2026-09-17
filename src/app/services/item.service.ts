@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Item, ItemRequest, PageResponse, Categoria } from '../models/items';
+import { Item, ItemRequest, PageResponse, Categoria, ApiResponse } from '../models/items';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class ItemService {
 
   constructor(private http: HttpClient) {}
 
-  listar(page: number, size: number, name?: string, category?: Categoria): Observable<PageResponse<Item>> {
+  listar(page: number, size: number, name?: string, category?: Categoria): Observable<ApiResponse<Item[]>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
@@ -24,7 +24,7 @@ export class ItemService {
       params = params.set('category', category);
     }
 
-    return this.http.get<PageResponse<Item>>(this.baseUrl, { params });
+    return this.http.get<ApiResponse<Item[]>>(this.baseUrl, { params });
   }
 
   buscarPorId(id: number): Observable<Item> {

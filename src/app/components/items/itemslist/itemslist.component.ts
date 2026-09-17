@@ -36,13 +36,13 @@ export class ItemslistComponent implements OnInit {
   }
 
   carregarItems(reset: boolean = false): void {
-    if (this.carregando || this.fimDaLista) return;
-
     if (reset) {
       this.page = 0;
       this.items = [];
       this.fimDaLista = false;
     }
+
+    if (this.carregando || this.fimDaLista) return;
 
     this.carregando = true;
 
@@ -53,9 +53,9 @@ export class ItemslistComponent implements OnInit {
       this.filtroCategoria || undefined
     ).subscribe({
       next: (res) => {
-        this.items = [...this.items, ...res.content];
-        this.totalPages = res.totalPages;
-        this.fimDaLista = res.last;
+        this.items = [...this.items, ...res.data];
+        this.totalPages = 1;
+        this.fimDaLista = true;
         this.page++;
         this.carregando = false;
       },
@@ -67,7 +67,12 @@ export class ItemslistComponent implements OnInit {
   }
 
   aplicarFiltro(): void {
+    console.log('FILTRO FOI CLICADO');
     this.carregarItems(true);
+  }
+
+  testeClique(): void {
+    alert('O BOTÃO FUNCIONOU!');
   }
 
   @HostListener('window:scroll')
