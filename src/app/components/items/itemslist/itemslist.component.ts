@@ -67,12 +67,7 @@ export class ItemslistComponent implements OnInit {
   }
 
   aplicarFiltro(): void {
-    console.log('FILTRO FOI CLICADO');
     this.carregarItems(true);
-  }
-
-  testeClique(): void {
-    alert('O BOTÃO FUNCIONOU!');
   }
 
   @HostListener('window:scroll')
