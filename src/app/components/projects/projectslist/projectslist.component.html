@@ -10,17 +10,14 @@
   <!-- Filtros -->
   <div class="row mb-4 g-3">
     <div class="col-md-10">
-      <div class="form-outline" mdbFormControl>
-        <input
-            type="text"
-            id="filtroNome"
-            class="form-control"
-            [(ngModel)]="filtroNome"
-            (keyup.enter)="aplicarFiltro()"
-            mdbInput
-        />
-        <label class="form-label" for="filtroNome" mdbLabel>Buscar por nome</label>
-      </div>
+      <label class="form-label" for="filtroNome">Buscar por nome</label>
+      <input
+          type="text"
+          id="filtroNome"
+          class="form-control"
+          [(ngModel)]="filtroNome"
+          (keyup.enter)="aplicarFiltro()"
+      />
     </div>
 
     <div class="col-md-2">

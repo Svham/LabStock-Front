@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Project, ProjectRequest } from '../models/projects';
+import { Project, ProjectRequest, ProjectItem, ProjectItemRequest } from '../models/projects';
 import { ApiResponse } from '../models/items';
 import { environment } from '../../environments/environment';
 
@@ -39,5 +39,13 @@ export class ProjectService {
 
   deletar(id: number): Observable<ApiResponse<void>> {
     return this.http.delete<ApiResponse<void>>(`${this.baseUrl}/${id}`);
+  }
+
+  vincularItem(projectId: number, request: ProjectItemRequest): Observable<ApiResponse<ProjectItem>> {
+    return this.http.post<ApiResponse<ProjectItem>>(`${this.baseUrl}/${projectId}/items`, request);
+  }
+
+  desvincularItem(projectId: number, itemId: number): Observable<ApiResponse<void>> {
+    return this.http.delete<ApiResponse<void>>(`${this.baseUrl}/${projectId}/items/${itemId}`);
   }
 }

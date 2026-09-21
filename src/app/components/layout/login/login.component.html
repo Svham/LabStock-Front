@@ -14,17 +14,15 @@
     <br>
     <h2 class="card-title2">Login</h2>
     <br>
-    <mdb-form-control>
-  <input mdbInput type="text" id="Usuario" class="form-control"  [(ngModel)]="usuario"/>
-  <label mdbLabel class="form-label" for="Usuario">Usuario</label>
-    </mdb-form-control>
+    <div class="mb-3 text-start">
+      <label class="form-label" for="Usuario">Usuario</label>
+      <input type="text" id="Usuario" class="form-control" [(ngModel)]="usuario"/>
+    </div>
 
-    <br>
-
-    <mdb-form-control>
-  <input mdbInput type="password" id="Senha" class="form-control" [(ngModel)]="senha"/>
-  <label mdbLabel class="form-label" for="Senha">Senha</label>
-    </mdb-form-control>
+    <div class="mb-3 text-start">
+      <label class="form-label" for="Senha">Senha</label>
+      <input type="password" id="Senha" class="form-control" [(ngModel)]="senha"/>
+    </div>
 
     <br>
 
