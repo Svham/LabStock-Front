@@ -1,0 +1,76 @@
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Projetos</h2>
+    <a *ngIf="isTeacher" routerLink="new" class="btn btn-primary" mdbRipple>
+      + Novo Projeto
+    </a>
+  </div>
+
+  <!-- Filtros -->
+  <div class="row mb-4 g-3">
+    <div class="col-md-10">
+      <div class="form-outline" mdbFormControl>
+        <input
+            type="text"
+            id="filtroNome"
+            class="form-control"
+            [(ngModel)]="filtroNome"
+            (keyup.enter)="aplicarFiltro()"
+            mdbInput
+        />
+        <label class="form-label" for="filtroNome" mdbLabel>Buscar por nome</label>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <button class="btn btn-outline-primary w-100" mdbRipple (click)="aplicarFiltro()">
+        Filtrar
+      </button>
+    </div>
+  </div>
+
+  <!-- Lista -->
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Nome</th>
+          <th>Itens vinculados</th>
+          <th>Status</th>
+          <th *ngIf="isTeacher">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let project of projects" [class.table-secondary]="project.isInactive">
+          <td>{{ project.name }}</td>
+          <td>{{ project.items?.length || 0 }}</td>
+          <td>
+            <span class="badge" [class.bg-success]="!project.isInactive" [class.bg-secondary]="project.isInactive">
+              {{ project.isInactive ? 'Inativo' : 'Ativo' }}
+            </span>
+          </td>
+          <td *ngIf="isTeacher">
+            <a [routerLink]="['edit', project.id]" class="btn btn-sm btn-outline-secondary me-1" mdbRipple>
+              Editar
+            </a>
+            <button class="btn btn-sm btn-outline-warning me-1" mdbRipple (click)="toggleInativar(project)">
+              {{ project.isInactive ? 'Ativar' : 'Inativar' }}
+            </button>
+            <button class="btn btn-sm btn-outline-danger" mdbRipple (click)="deletar(project)">
+              Excluir
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Loading / vazio -->
+  <div class="text-center my-3">
+    <div *ngIf="carregando" class="spinner-border text-primary" role="status"></div>
+    <p *ngIf="!carregando && projects.length === 0" class="text-muted">
+      Nenhum projeto encontrado.
+    </p>
+  </div>
+</div>

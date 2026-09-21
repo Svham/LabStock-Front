@@ -1,0 +1,32 @@
+<div class="container mt-4" style="max-width: 600px;">
+  <h2 class="mb-4">{{ modoEdicao ? 'Editar Projeto' : 'Novo Projeto' }}</h2>
+
+  <div *ngIf="erro" class="alert alert-danger">{{ erro }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+
+    <!-- Nome -->
+    <div class="form-outline mb-4" mdbFormControl>
+      <input
+          type="text"
+          id="name"
+          class="form-control"
+          formControlName="name"
+          mdbInput
+      />
+      <label class="form-label" for="name" mdbLabel>Nome do projeto</label>
+    </div>
+
+    <!-- Ações -->
+    <div class="d-flex justify-content-end gap-2 mt-4">
+      <button type="button" class="btn btn-outline-secondary" mdbRipple (click)="cancelar()">
+        <i class="fas fa-times me-1"></i>
+        Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary" mdbRipple [disabled]="salvando">
+        <i class="fas" [class.fa-spinner]="salvando" [class.fa-spin]="salvando" [class.fa-save]="!salvando"></i>
+        {{ salvando ? 'Salvando...' : (modoEdicao ? 'Salvar alterações' : 'Cadastrar') }}
+      </button>
+    </div>
+  </form>
+</div>
