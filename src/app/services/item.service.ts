@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Item, ItemRequest, PageResponse, Categoria, ApiResponse } from '../models/items';
+import { Item, ItemRequest, Categoria, ApiResponse } from '../models/items';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -27,23 +27,23 @@ export class ItemService {
     return this.http.get<ApiResponse<Item[]>>(this.baseUrl, { params });
   }
 
-  buscarPorId(id: number): Observable<Item> {
-    return this.http.get<Item>(`${this.baseUrl}/${id}`);
+  buscarPorId(id: number): Observable<ApiResponse<Item>> {
+    return this.http.get<ApiResponse<Item>>(`${this.baseUrl}/${id}`);
   }
 
-  criar(item: ItemRequest): Observable<Item> {
-    return this.http.post<Item>(this.baseUrl, item);
+  criar(item: ItemRequest): Observable<ApiResponse<Item>> {
+    return this.http.post<ApiResponse<Item>>(this.baseUrl, item);
   }
 
-  editar(id: number, item: ItemRequest): Observable<Item> {
-    return this.http.put<Item>(`${this.baseUrl}/${id}`, item);
+  editar(id: number, item: ItemRequest): Observable<ApiResponse<Item>> {
+    return this.http.put<ApiResponse<Item>>(`${this.baseUrl}/${id}`, item);
   }
 
-  toggleInativar(id: number): Observable<Item> {
-    return this.http.patch<Item>(`${this.baseUrl}/${id}/inactivate`, {});
+  toggleInativar(id: number): Observable<ApiResponse<Item>> {
+    return this.http.put<ApiResponse<Item>>(`${this.baseUrl}/${id}/inactivate`, {});
   }
 
-  deletar(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  deletar(id: number): Observable<ApiResponse<void>> {
+    return this.http.delete<ApiResponse<void>>(`${this.baseUrl}/${id}`);
   }
 }

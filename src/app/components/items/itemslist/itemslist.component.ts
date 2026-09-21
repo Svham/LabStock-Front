@@ -82,8 +82,8 @@ export class ItemslistComponent implements OnInit {
 
   toggleInativar(item: Item): void {
     this.itemService.toggleInativar(item.id).subscribe({
-      next: (atualizado) => {
-        item.isInactive = atualizado.isInactive;
+      next: (res) => {
+        item.isInactive = res.data.isInactive;
       },
       error: (err) => console.error('Erro ao inativar item:', err)
     });

@@ -51,7 +51,8 @@ export class ItemsdetailsComponent implements OnInit {
 
   carregarItem(id: number): void {
     this.itemService.buscarPorId(id).subscribe({
-      next: (item) => {
+      next: (res) => {
+        const item = res.data;
         this.form.patchValue({
           name: item.name,
           category: item.category,
