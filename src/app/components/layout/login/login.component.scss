@@ -1,18 +1,17 @@
-.top{
-    top: 40vh;
-    position: relative;
+.background {
+  background-color: #04ff82;
+  height: 50vh;
+  position: relative;
 }
-.container{
-    top: 20vh;
-    position: relative;
-    align-items: center;
+
+.topo {
+  padding-top: 25vh;
 }
-.card{
-    width: 30vw;
-    height: 50vh;
-    position: relative;
-    align-items: center;
-}
-.background{
-    background-color: #04ff82;
+
+.login-card {
+  width: 420px;
+  max-width: 90vw;
+  background-color: #e0e0e0;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
