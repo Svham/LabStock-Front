@@ -1,0 +1,120 @@
+<div class="container mt-4" style="max-width: 800px;">
+  <h2 class="mb-4">{{ modoEdicao ? 'Editar Projeto' : 'Novo Projeto' }}</h2>
+
+  <div *ngIf="erro" class="alert alert-danger">{{ erro }}</div>
+
+  <!-- Formulário do projeto -->
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+
+    <div class="mb-4">
+      <label class="form-label" for="name">Nome do projeto</label>
+      <input
+          type="text"
+          id="name"
+          class="form-control"
+          formControlName="name"
+      />
+    </div>
+
+    <!-- Ações do form principal -->
+    <div class="d-flex justify-content-end gap-2 mt-4">
+      <button type="button" class="btn btn-outline-secondary" mdbRipple (click)="cancelar()">
+        <i class="fas fa-times me-1"></i>
+        Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary" mdbRipple [disabled]="salvando">
+        <i class="fas" [class.fa-spinner]="salvando" [class.fa-spin]="salvando" [class.fa-save]="!salvando"></i>
+        {{ salvando ? 'Salvando...' : (modoEdicao ? 'Salvar alterações' : 'Cadastrar') }}
+      </button>
+    </div>
+  </form>
+
+  <!-- Seção Itens do projeto (só aparece depois que o projeto existe) -->
+  <div *ngIf="modoEdicao" class="card mt-5">
+    <div class="card-header">
+      <h5 class="mb-0">Itens do projeto</h5>
+    </div>
+    <div class="card-body">
+
+      <!-- Form pra vincular novo item -->
+      <div class="row g-2 align-items-end mb-4">
+        <div class="col-md-6">
+          <label class="form-label" for="itemSelecionado">Item</label>
+          <select class="form-select" id="itemSelecionado" [(ngModel)]="itemSelecionadoId">
+            <option [ngValue]="null" disabled>Selecione um item</option>
+            <option *ngFor="let item of itensDisponiveisFiltrados" [ngValue]="item.id">
+              {{ item.name }} ({{ item.category }})
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label" for="quantidadeNecessaria">Quantidade</label>
+          <input
+              type="number"
+              id="quantidadeNecessaria"
+              class="form-control"
+              [(ngModel)]="quantidadeNecessaria"
+              min="1"
+          />
+        </div>
+
+        <div class="col-md-3">
+          <button
+            class="btn btn-primary w-100"
+            mdbRipple
+            [disabled]="!itemSelecionadoId || quantidadeNecessaria < 1 || vinculando"
+            (click)="vincularItem()"
+          >
+            <i class="fas" [class.fa-spinner]="vinculando" [class.fa-spin]="vinculando" [class.fa-plus]="!vinculando"></i>
+            {{ vinculando ? 'Adicionando...' : 'Adicionar' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabela dos itens vinculados -->
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Item</th>
+              <th>Categoria</th>
+              <th>Qtd. necessária</th>
+              <th>Disponível</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let vinculo of itensVinculados">
+              <td>{{ vinculo.itemName }}</td>
+              <td>{{ vinculo.category }}</td>
+              <td>{{ vinculo.quantityNeeded }}</td>
+              <td>
+                <span [class.text-danger]="vinculo.availableQuantity < vinculo.quantityNeeded">
+                  {{ vinculo.availableQuantity }}
+                </span>
+              </td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-outline-danger" mdbRipple (click)="desvincularItem(vinculo)">
+                  <i class="fas fa-times"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p *ngIf="itensVinculados.length === 0" class="text-muted text-center my-3">
+          Nenhum item vinculado ainda.
+        </p>
+      </div>
+
+      <!-- Botão de voltar -->
+      <div class="d-flex justify-content-end mt-3">
+        <button type="button" class="btn btn-outline-secondary" mdbRipple (click)="voltarParaLista()">
+          <i class="fas fa-arrow-left me-1"></i>
+          Voltar para lista
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

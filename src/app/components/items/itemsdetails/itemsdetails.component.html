@@ -6,19 +6,19 @@
   <form [formGroup]="form" (ngSubmit)="salvar()">
 
     <!-- Nome -->
-    <div class="form-outline mb-4" mdbFormControl>
-    <input
-        type="text"
-        id="name"
-        class="form-control"
-        formControlName="name"
-        mdbInput
-    />
-    <label class="form-label" for="name" mdbLabel>Nome do item</label>
+    <div class="mb-4">
+      <label class="form-label" for="name">Nome do item</label>
+      <input
+          type="text"
+          id="name"
+          class="form-control"
+          formControlName="name"
+      />
     </div>
 
     <!-- Categoria -->
-    <div class="form-outline mb-4" mdbFormControl>
+    <div class="mb-4">
+      <label class="form-label" for="category">Categoria</label>
       <select class="form-select" id="category" formControlName="category">
         <option value="" disabled selected>Selecione a categoria</option>
         <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
@@ -26,30 +26,28 @@
     </div>
 
     <!-- Quantidade -->
-    <div class="form-outline mb-4" mdbFormControl>
-        <input
-            type="number"
-            id="quantity"
-            class="form-control"
-            formControlName="quantity"
-            min="0"
-            mdbInput
-        />
-        <label class="form-label" for="quantity" mdbLabel>Quantidade total em estoque</label>
+    <div class="mb-4">
+      <label class="form-label" for="quantity">Quantidade total em estoque</label>
+      <input
+          type="number"
+          id="quantity"
+          class="form-control"
+          formControlName="quantity"
+          min="0"
+      />
     </div>
 
-      <!-- Mínimo -->
-    <div class="form-outline mb-4" mdbFormControl>
-        <input
-            type="number"
-            id="minQuantity"
-            class="form-control"
-            formControlName="minQuantity"
-            min="0"
-            mdbInput
-        />
-        <label class="form-label" for="minQuantity" mdbLabel>Estoque mínimo</label>
-</div>
+    <!-- Mínimo -->
+    <div class="mb-4">
+      <label class="form-label" for="minQuantity">Estoque mínimo</label>
+      <input
+          type="number"
+          id="minQuantity"
+          class="form-control"
+          formControlName="minQuantity"
+          min="0"
+      />
+    </div>
 
   <!-- Ações -->
     <div class="d-flex justify-content-end gap-2 mt-4">

@@ -10,31 +10,27 @@
   <!-- Filtros -->
   <div class="row mb-4 g-3">
     <div class="col-md-6">
-      <div class="form-outline" mdbFormControl>
-        <input
-            type="text"
-            id="filtroNome"
-            class="form-control"
-            [(ngModel)]="filtroNome"
-            (keyup.enter)="aplicarFiltro()"
-            mdbInput
-  />
-  <label class="form-label" for="filtroNome" mdbLabel>Buscar por nome</label>
-</div>
+      <label class="form-label" for="filtroNome">Buscar por nome</label>
+      <input
+          type="text"
+          id="filtroNome"
+          class="form-control"
+          [(ngModel)]="filtroNome"
+          (keyup.enter)="aplicarFiltro()"
+      />
     </div>
 
     <div class="col-md-4">
-      <div class="form-outline" mdbFormControl>
-        <select
-          class="form-select"
-          id="filtroCategoria"
-          [(ngModel)]="filtroCategoria"
-          (change)="aplicarFiltro()"
-        >
-          <option value="">Todas as categorias</option>
-          <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
-        </select>
-      </div>
+      <label class="form-label" for="filtroCategoria">Categoria</label>
+      <select
+        class="form-select"
+        id="filtroCategoria"
+        [(ngModel)]="filtroCategoria"
+        (change)="aplicarFiltro()"
+      >
+        <option value="">Todas as categorias</option>
+        <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+      </select>
     </div>
 
     <div class="col-md-2">

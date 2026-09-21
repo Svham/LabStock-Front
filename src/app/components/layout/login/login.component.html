@@ -1,33 +1,31 @@
 <div class="background">
-    
-<div class="container">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-auto topo">
 
-    <div class="row">
-        <div class="col-lg-4 centralizar topo">
+        <div class="card login-card">
+          <img src="https://i.ytimg.com/vi/RvBNw8OheyU/maxresdefault.jpg" class="card-img-top" alt="LabStock"/>
+          <div class="card-body">
+            <h1 class="card-title text-center mb-1">LabStock</h1>
+            <h2 class="card-title2 text-center mb-4">Login</h2>
 
-            <div class="card" style="width: 18rem;">
-  <img src="https://i.ytimg.com/vi/RvBNw8OheyU/maxresdefault.jpg" class="card-img-top" alt="Chicago Skyscrapers"/>
-  <div class="card-body">
-    <br>
-    <h1 class="card-title">LabStock</h1>
-    <br>
-    <br>
-    <h2 class="card-title2">Login</h2>
-    <br>
-    <mdb-form-control>
-  <input mdbInput type="text" id="Usuario" class="form-control"  [(ngModel)]="usuario"/>
-  <label mdbLabel class="form-label" for="Usuario">Usuario</label>
-    </mdb-form-control>
+            <div class="mb-3">
+              <label class="form-label" for="Usuario">Usuario</label>
+              <input type="text" id="Usuario" class="form-control" [(ngModel)]="usuario"/>
+            </div>
 
-    <br>
+            <div class="mb-4">
+              <label class="form-label" for="Senha">Senha</label>
+              <input type="password" id="Senha" class="form-control" [(ngModel)]="senha"/>
+            </div>
 
-    <mdb-form-control>
-  <input mdbInput type="password" id="Senha" class="form-control" [(ngModel)]="senha"/>
-  <label mdbLabel class="form-label" for="Senha">Senha</label>
-    </mdb-form-control>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary" mdbRipple (click)="logar()">Logar</button>
+            </div>
+          </div>
+        </div>
 
-    <br>
-
-    <button type="button" class="btn btn-primary" mdbRipple (click)="logar()">Logar</button>
+      </div>
     </div>
+  </div>
 </div>
