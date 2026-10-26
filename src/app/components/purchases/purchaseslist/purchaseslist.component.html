@@ -1,0 +1,64 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Compras</h2>
+  </div>
+
+  <div *ngIf="erro" class="alert alert-danger">{{ erro }}</div>
+
+  <!-- Visões -->
+  <ul class="nav nav-pills mb-4">
+    <li class="nav-item">
+      <button type="button" class="nav-link" [class.active]="visao === 'pendentes'" (click)="trocarVisao('pendentes')">
+        Pendentes
+      </button>
+    </li>
+    <li class="nav-item">
+      <button type="button" class="nav-link" [class.active]="visao === 'compradas'" (click)="trocarVisao('compradas')">
+        Compradas
+      </button>
+    </li>
+  </ul>
+
+  <!-- Lista -->
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Item</th>
+          <th>Categoria</th>
+          <th>Qtd. sugerida</th>
+          <th *ngIf="visao === 'pendentes'">Sugerida em</th>
+          <th *ngIf="visao === 'compradas'">Comprada em</th>
+          <th *ngIf="visao === 'pendentes'">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let compra of compras">
+          <td>{{ compra.itemName }}</td>
+          <td>{{ compra.category }}</td>
+          <td>{{ compra.suggestion }}</td>
+          <td *ngIf="visao === 'pendentes'">{{ compra.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td *ngIf="visao === 'compradas'">{{ compra.updatedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td *ngIf="visao === 'pendentes'">
+            <button class="btn btn-sm btn-outline-success" mdbRipple
+                    [disabled]="processandoId === compra.id" (click)="marcarComprada(compra)">
+              Marcar como comprado
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Loading / vazio -->
+  <div class="text-center my-3">
+    <div *ngIf="carregando" class="spinner-border text-primary" role="status"></div>
+    <p *ngIf="!carregando && compras.length === 0 && visao === 'pendentes'" class="text-muted">
+      Nenhuma sugestão pendente. O sistema gera as sugestões automaticamente, todo dia às 02h,
+      para os itens abaixo do estoque mínimo.
+    </p>
+    <p *ngIf="!carregando && compras.length === 0 && visao === 'compradas'" class="text-muted">
+      Nenhuma compra realizada ainda.
+    </p>
+  </div>
+</div>
