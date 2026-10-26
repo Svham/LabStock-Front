@@ -1,0 +1,59 @@
+<div class="container mt-4" style="max-width: 600px;">
+  <h2 class="mb-4">Solicitar Empréstimo</h2>
+
+  <div *ngIf="sucesso" class="alert alert-success">{{ sucesso }}</div>
+  <div *ngIf="erro" class="alert alert-danger">{{ erro }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="solicitar()">
+
+    <!-- Aluno -->
+    <div class="mb-4">
+      <label class="form-label" for="studentId">Aluno</label>
+      <select class="form-select" id="studentId" formControlName="studentId">
+        <option [ngValue]="null" disabled>Selecione o aluno</option>
+        <option *ngFor="let aluno of alunos" [ngValue]="aluno.id">{{ aluno.name }} ({{ aluno.email }})</option>
+      </select>
+      <small *ngIf="studentId?.touched && studentId?.invalid" class="text-danger">Selecione o aluno.</small>
+    </div>
+
+    <!-- Professor -->
+    <div class="mb-4">
+      <label class="form-label" for="teacherId">Professor responsável</label>
+      <select class="form-select" id="teacherId" formControlName="teacherId">
+        <option [ngValue]="null" disabled>Selecione o professor</option>
+        <option *ngFor="let professor of professores" [ngValue]="professor.id">{{ professor.name }}</option>
+      </select>
+      <small *ngIf="teacherId?.touched && teacherId?.invalid" class="text-danger">Selecione o professor.</small>
+    </div>
+
+    <!-- Item -->
+    <div class="mb-4">
+      <label class="form-label" for="itemId">Item</label>
+      <select class="form-select" id="itemId" formControlName="itemId">
+        <option [ngValue]="null" disabled>Selecione o item</option>
+        <option *ngFor="let item of itens" [ngValue]="item.id">
+          {{ item.name }} ({{ item.category }}) - disponível: {{ item.availableQuantity }}
+        </option>
+      </select>
+      <small *ngIf="itemId?.touched && itemId?.invalid" class="text-danger">Selecione o item.</small>
+    </div>
+
+    <!-- Quantidade -->
+    <div class="mb-4">
+      <label class="form-label" for="quantity">Quantidade</label>
+      <input type="number" id="quantity" class="form-control" formControlName="quantity" min="1" />
+      <small *ngIf="quantity?.touched && quantity?.invalid" class="text-danger">A quantidade deve ser pelo menos 1.</small>
+      <small *ngIf="excedeEstoque" class="text-danger">
+        Quantidade maior que o disponível ({{ itemSelecionado?.availableQuantity }}).
+      </small>
+    </div>
+
+    <!-- Ações -->
+    <div class="d-flex justify-content-end gap-2 mt-4">
+      <button type="submit" class="btn btn-primary" mdbRipple [disabled]="salvando || excedeEstoque">
+        <i class="fas" [class.fa-spinner]="salvando" [class.fa-spin]="salvando" [class.fa-paper-plane]="!salvando"></i>
+        {{ salvando ? 'Enviando...' : 'Solicitar empréstimo' }}
+      </button>
+    </div>
+  </form>
+</div>
