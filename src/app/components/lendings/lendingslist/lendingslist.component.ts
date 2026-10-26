@@ -5,7 +5,7 @@ import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import { Observable } from 'rxjs';
 
 import { LendingService } from '../../../services/lending.service';
-import { Lending, LendingStatus } from '../../../models/lendings';
+import { Lending, LendingStatus, rotuloStatus, classeStatus } from '../../../models/lendings';
 import { ApiResponse } from '../../../models/items';
 
 @Component({
@@ -24,6 +24,10 @@ export class LendingslistComponent implements OnInit {
 
   filtroStatus: LendingStatus | '' = '';
   statusOpcoes = Object.values(LendingStatus);
+
+  // Deixa as funções compartilhadas disponíveis no template
+  rotuloStatus = rotuloStatus;
+  classeStatus = classeStatus;
 
   constructor(private lendingService: LendingService) {}
 
@@ -83,18 +87,6 @@ export class LendingslistComponent implements OnInit {
   // Aprovado e ainda não devolvido = o item está emprestado agora
   emUso(emprestimo: Lending): boolean {
     return emprestimo.status === LendingStatus.APPROVED && !emprestimo.returned;
-  }
-
-  rotuloStatus(emprestimo: Lending): string {
-    if (emprestimo.status === LendingStatus.PENDING) return 'Pendente';
-    if (emprestimo.status === LendingStatus.REJECTED) return 'Rejeitado';
-    return emprestimo.returned ? 'Devolvido' : 'Em uso';
-  }
-
-  classeStatus(emprestimo: Lending): string {
-    if (emprestimo.status === LendingStatus.PENDING) return 'bg-warning text-dark';
-    if (emprestimo.status === LendingStatus.REJECTED) return 'bg-danger';
-    return emprestimo.returned ? 'bg-success' : 'bg-primary';
   }
 
   rotuloOpcao(status: LendingStatus): string {

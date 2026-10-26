@@ -26,3 +26,17 @@ export interface LendingRequest {
   studentId: number;
   quantity: number;
 }
+
+// Texto e cor do status, usados pelas telas de empréstimos.
+// "Aprovado" ainda não devolvido aparece como "Em uso" (o item está fora do laboratório).
+export function rotuloStatus(emprestimo: Lending): string {
+  if (emprestimo.status === LendingStatus.PENDING) return 'Pendente';
+  if (emprestimo.status === LendingStatus.REJECTED) return 'Rejeitado';
+  return emprestimo.returned ? 'Devolvido' : 'Em uso';
+}
+
+export function classeStatus(emprestimo: Lending): string {
+  if (emprestimo.status === LendingStatus.PENDING) return 'bg-warning text-dark';
+  if (emprestimo.status === LendingStatus.REJECTED) return 'bg-danger';
+  return emprestimo.returned ? 'bg-success' : 'bg-primary';
+}

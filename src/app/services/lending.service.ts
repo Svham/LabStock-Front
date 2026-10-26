@@ -25,6 +25,11 @@ export class LendingService {
     return this.http.get<ApiResponse<Lending[]>>(this.baseUrl, { params });
   }
 
+  listarPorAluno(studentId: number): Observable<ApiResponse<Lending[]>> {
+    const params = new HttpParams().set('studentId', studentId.toString());
+    return this.http.get<ApiResponse<Lending[]>>(`${this.baseUrl}/my`, { params });
+  }
+
   aprovar(id: number): Observable<ApiResponse<Lending>> {
     return this.http.put<ApiResponse<Lending>>(`${this.baseUrl}/${id}/approve`, {});
   }

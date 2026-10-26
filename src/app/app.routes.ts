@@ -11,6 +11,7 @@ import { DamagedlistComponent } from './components/damaged/damagedlist/damagedli
 import { DamagedregisterComponent } from './components/damaged/damagedregister/damagedregister.component';
 import { PurchaseslistComponent } from './components/purchases/purchaseslist/purchaseslist.component';
 import { UserslistComponent } from './components/users/userslist/userslist.component';
+import { MylendingsComponent } from './components/lendings/mylendings/mylendings.component';
 
 export const routes: Routes = [
     {path : "", redirectTo: "login", pathMatch: "full"},
@@ -25,6 +26,7 @@ export const routes: Routes = [
         {path: "projects/edit/:id", component: ProjectsdetailsComponent},
         {path: "lendings", component: LendingslistComponent},
         {path: "lendings/new", component: LendingrequestComponent},
+        {path: "lendings/my", component: MylendingsComponent},
         {path: "damaged", component: DamagedlistComponent},
         {path: "damaged/new", component: DamagedregisterComponent},
         {path: "purchases", component: PurchaseslistComponent},
