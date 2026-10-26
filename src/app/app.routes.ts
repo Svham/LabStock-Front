@@ -14,6 +14,7 @@ import { PurchaseslistComponent } from './components/purchases/purchaseslist/pur
 import { UserslistComponent } from './components/users/userslist/userslist.component';
 import { MylendingsComponent } from './components/lendings/mylendings/mylendings.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { authGuard, roleGuard } from './guards/auth.guard';
 
 // Quem pode entrar em cada tela (regra do guia do front):
@@ -26,6 +27,8 @@ export const routes: Routes = [
     {path : "login", component: LoginComponent},
     {path : "register", component: RegisterComponent},
     {path: "admin", component: PrincipalComponent, canActivate: [authGuard], children: [
+        {path: "", redirectTo: "dashboard", pathMatch: "full"},
+        {path: "dashboard", component: DashboardComponent},
         {path: "items", component: ItemslistComponent},
         {path: "items/new", component: ItemsdetailsComponent, canActivate: [roleGuard('LAB')]},
         {path: "items/edit/:id", component: ItemsdetailsComponent, canActivate: [roleGuard('LAB')]},

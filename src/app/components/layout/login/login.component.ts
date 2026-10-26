@@ -27,7 +27,7 @@ export class LoginComponent {
     this.authService.login(login).subscribe({
       next: (resposta) => {
         if (resposta.success) {
-          this.router.navigate(['/admin/items']);
+          this.router.navigate(['/admin/dashboard']);
         } else {
           alert(resposta.message);
         }

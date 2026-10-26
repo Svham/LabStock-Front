@@ -24,6 +24,6 @@ export function roleGuard(...perfis: string[]): CanActivateFn {
     }
 
     // Logado mas sem permissão: volta para a página inicial
-    return auth.temPerfil(...perfis) ? true : router.createUrlTree(['/admin/items']);
+    return auth.temPerfil(...perfis) ? true : router.createUrlTree(['/admin/dashboard']);
   };
 }
