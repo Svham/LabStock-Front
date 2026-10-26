@@ -6,6 +6,7 @@ import { ItemslistComponent} from './components/items/itemslist/itemslist.compon
 import { ProjectslistComponent } from './components/projects/projectslist/projectslist.component';
 import { ProjectsdetailsComponent } from './components/projects/projectsdetails/projectsdetails.component';
 import { LendingrequestComponent } from './components/lendings/lendingrequest/lendingrequest.component';
+import { LendingslistComponent } from './components/lendings/lendingslist/lendingslist.component';
 
 export const routes: Routes = [
     {path : "", redirectTo: "login", pathMatch: "full"},
@@ -18,6 +19,7 @@ export const routes: Routes = [
         {path: "projects", component: ProjectslistComponent},
         {path: "projects/new", component: ProjectsdetailsComponent},
         {path: "projects/edit/:id", component: ProjectsdetailsComponent},
+        {path: "lendings", component: LendingslistComponent},
         {path: "lendings/new", component: LendingrequestComponent},
     ]}
 ];
