@@ -5,3 +5,19 @@
 .centralizar {
     text-align: center;
 }
+
+// Tabelas com fundo cinza claro para se destacarem do fundo branco da página.
+// O MDB pinta as células com a variável --mdb-table-bg (por padrão igual ao fundo da página).
+.table {
+    --mdb-table-bg: #eceff3;
+}
+
+// Cabeçalho da tabela: um cinza mais escuro que o corpo
+.table .table-light {
+    --mdb-table-bg: #dde1e7;
+}
+
+// Linhas inativas (itens e projetos): mais escuras que as ativas para continuarem aparecendo
+.table .table-secondary {
+    --mdb-table-bg: #d3d7dd;
+}

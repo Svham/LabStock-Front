@@ -10,6 +10,7 @@ import { LendingslistComponent } from './components/lendings/lendingslist/lendin
 import { DamagedlistComponent } from './components/damaged/damagedlist/damagedlist.component';
 import { DamagedregisterComponent } from './components/damaged/damagedregister/damagedregister.component';
 import { PurchaseslistComponent } from './components/purchases/purchaseslist/purchaseslist.component';
+import { UserslistComponent } from './components/users/userslist/userslist.component';
 
 export const routes: Routes = [
     {path : "", redirectTo: "login", pathMatch: "full"},
@@ -27,5 +28,6 @@ export const routes: Routes = [
         {path: "damaged", component: DamagedlistComponent},
         {path: "damaged/new", component: DamagedregisterComponent},
         {path: "purchases", component: PurchaseslistComponent},
+        {path: "users", component: UserslistComponent},
     ]}
 ];
