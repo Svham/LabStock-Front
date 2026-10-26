@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { LoginRequest, LoginResponse, UserResponse } from '../models/auth';
+import { LoginRequest, LoginResponse, RegisterRequest, UserResponse } from '../models/auth';
 
 // Nome da "gaveta" do localStorage onde o usuário logado fica guardado
 const CHAVE_USUARIO = 'labstock.usuario';
@@ -28,6 +28,11 @@ export class AuthService {
         }
       })
     );
+  }
+
+  // Cadastro público: o backend cria o usuário sempre como aluno (STUDENT)
+  register(request: RegisterRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.baseUrl}/register`, request);
   }
 
   logout(): void {
