@@ -1,0 +1,66 @@
+<div class="container mt-4" style="max-width: 600px;">
+  <h2 class="mb-4">Registrar Dano</h2>
+
+  <div *ngIf="erro" class="alert alert-danger">{{ erro }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="registrar()">
+
+    <!-- Item -->
+    <div class="mb-4">
+      <label class="form-label" for="itemId">Item danificado</label>
+      <select class="form-select" id="itemId" formControlName="itemId">
+        <option [ngValue]="null" disabled>Selecione o item</option>
+        <option *ngFor="let item of itens" [ngValue]="item.id">
+          {{ item.name }} ({{ item.category }}) - estoque total: {{ item.quantity }}
+        </option>
+      </select>
+      <small *ngIf="itemId?.touched && itemId?.invalid" class="text-danger">Selecione o item.</small>
+    </div>
+
+    <!-- Aluno -->
+    <div class="mb-4">
+      <label class="form-label" for="studentId">Aluno envolvido</label>
+      <select class="form-select" id="studentId" formControlName="studentId">
+        <option [ngValue]="null" disabled>Selecione o aluno</option>
+        <option *ngFor="let aluno of alunos" [ngValue]="aluno.id">{{ aluno.name }} ({{ aluno.email }})</option>
+      </select>
+      <small *ngIf="studentId?.touched && studentId?.invalid" class="text-danger">Selecione o aluno.</small>
+    </div>
+
+    <!-- Laboratorista (quem está logado) -->
+    <div class="mb-4">
+      <label class="form-label">Laboratorista responsável</label>
+      <input type="text" class="form-control" [value]="laboratorista?.name" disabled />
+    </div>
+
+    <!-- Quantidade -->
+    <div class="mb-4">
+      <label class="form-label" for="quantity">Quantidade danificada</label>
+      <input type="number" id="quantity" class="form-control" formControlName="quantity" min="1" />
+      <small class="text-muted d-block">Essa quantidade será descontada do estoque total do item.</small>
+      <small *ngIf="quantity?.touched && quantity?.invalid" class="text-danger">A quantidade deve ser pelo menos 1.</small>
+      <small *ngIf="excedeEstoque" class="text-danger">
+        Quantidade maior que o estoque total do item ({{ itemSelecionado?.quantity }}).
+      </small>
+    </div>
+
+    <!-- Motivo -->
+    <div class="mb-4">
+      <label class="form-label" for="reason">Motivo</label>
+      <textarea id="reason" class="form-control" rows="3" formControlName="reason"></textarea>
+      <small *ngIf="reason?.touched && reason?.invalid" class="text-danger">Informe o motivo do dano.</small>
+    </div>
+
+    <!-- Ações -->
+    <div class="d-flex justify-content-end gap-2 mt-4">
+      <button type="button" class="btn btn-outline-secondary" mdbRipple (click)="cancelar()">
+        <i class="fas fa-times me-1"></i>
+        Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary" mdbRipple [disabled]="salvando || excedeEstoque">
+        <i class="fas" [class.fa-spinner]="salvando" [class.fa-spin]="salvando" [class.fa-save]="!salvando"></i>
+        {{ salvando ? 'Registrando...' : 'Registrar dano' }}
+      </button>
+    </div>
+  </form>
+</div>

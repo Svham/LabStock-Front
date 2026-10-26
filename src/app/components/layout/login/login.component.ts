@@ -1,12 +1,12 @@
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [MdbFormsModule, FormsModule],
+  imports: [MdbFormsModule, FormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -27,7 +27,7 @@ export class LoginComponent {
     this.authService.login(login).subscribe({
       next: (resposta) => {
         if (resposta.success) {
-          this.router.navigate(['/admin/items']);
+          this.router.navigate(['/admin/dashboard']);
         } else {
           alert(resposta.message);
         }

@@ -1,0 +1,76 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Empréstimos</h2>
+  </div>
+
+  <div *ngIf="erro" class="alert alert-danger">{{ erro }}</div>
+
+  <!-- Filtro -->
+  <div class="row mb-4 g-3">
+    <div class="col-md-4">
+      <label class="form-label" for="filtroStatus">Status</label>
+      <select class="form-select" id="filtroStatus" [(ngModel)]="filtroStatus" (change)="carregar()">
+        <option value="">Todos</option>
+        <option *ngFor="let status of statusOpcoes" [value]="status">{{ rotuloOpcao(status) }}</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Lista -->
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Item</th>
+          <th>Qtd.</th>
+          <th>Aluno</th>
+          <th>Professor</th>
+          <th>Solicitado em</th>
+          <th>Devolvido em</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emprestimo of emprestimos">
+          <td>{{ emprestimo.itemName }}</td>
+          <td>{{ emprestimo.quantity }}</td>
+          <td>{{ emprestimo.studentName }}</td>
+          <td>{{ emprestimo.teacherName }}</td>
+          <td>{{ emprestimo.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ (emprestimo.returnDate | date:'dd/MM/yyyy HH:mm') || '-' }}</td>
+          <td>
+            <span class="badge" [ngClass]="classeStatus(emprestimo)">{{ rotuloStatus(emprestimo) }}</span>
+          </td>
+          <td>
+            <!-- Pendente: aprovar ou rejeitar -->
+            <ng-container *ngIf="emprestimo.status === 'PENDING'">
+              <button class="btn btn-sm btn-outline-success me-1" mdbRipple
+                      [disabled]="processandoId === emprestimo.id" (click)="aprovar(emprestimo)">
+                Aprovar
+              </button>
+              <button class="btn btn-sm btn-outline-danger" mdbRipple
+                      [disabled]="processandoId === emprestimo.id" (click)="rejeitar(emprestimo)">
+                Rejeitar
+              </button>
+            </ng-container>
+
+            <!-- Em uso: registrar a devolução -->
+            <button *ngIf="emUso(emprestimo)" class="btn btn-sm btn-outline-primary" mdbRipple
+                    [disabled]="processandoId === emprestimo.id" (click)="devolver(emprestimo)">
+              Registrar devolução
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Loading / vazio -->
+  <div class="text-center my-3">
+    <div *ngIf="carregando" class="spinner-border text-primary" role="status"></div>
+    <p *ngIf="!carregando && emprestimos.length === 0" class="text-muted">
+      Nenhum empréstimo encontrado.
+    </p>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="background">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-auto topo">
+
+        <div class="card login-card">
+          <img src="https://i.ytimg.com/vi/RvBNw8OheyU/maxresdefault.jpg" class="card-img-top" alt="LabStock"/>
+          <div class="card-body">
+            <h1 class="card-title text-center mb-1">LabStock</h1>
+            <h2 class="card-title2 text-center mb-4">Cadastro de aluno</h2>
+
+            <div *ngIf="sucesso" class="alert alert-success">
+              Cadastro realizado com sucesso! Agora é só entrar com seu e-mail e senha.
+              <a routerLink="/login" class="alert-link">Ir para o login</a>
+            </div>
+            <div *ngIf="erro" class="alert alert-danger">{{ erro }}</div>
+
+            <form [formGroup]="form" (ngSubmit)="cadastrar()">
+
+              <div class="mb-3">
+                <label class="form-label" for="name">Nome</label>
+                <input type="text" id="name" class="form-control" formControlName="name" />
+                <small *ngIf="name?.touched && name?.invalid" class="text-danger">Informe o seu nome.</small>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="email">E-mail</label>
+                <input type="email" id="email" class="form-control" formControlName="email" />
+                <small *ngIf="email?.touched && email?.invalid" class="text-danger">Informe um e-mail válido.</small>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="password">Senha</label>
+                <input type="password" id="password" class="form-control" formControlName="password" />
+                <small *ngIf="password?.touched && password?.invalid" class="text-danger">Informe uma senha.</small>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label" for="confirmPassword">Confirmar senha</label>
+                <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" />
+                <small *ngIf="confirmPassword?.touched && senhasDiferentes" class="text-danger">As senhas não são iguais.</small>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary" mdbRipple [disabled]="salvando">
+                  <i class="fas" [class.fa-spinner]="salvando" [class.fa-spin]="salvando" [class.fa-user-plus]="!salvando"></i>
+                  {{ salvando ? 'Cadastrando...' : 'Cadastrar' }}
+                </button>
+              </div>
+
+              <div class="text-center mt-3">
+                <small>Já tem conta? <a routerLink="/login">Entrar</a></small>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

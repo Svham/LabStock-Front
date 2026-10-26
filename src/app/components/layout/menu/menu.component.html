@@ -3,7 +3,7 @@
   <!-- Container wrapper -->
   <div class="container-fluid">
     <!-- Navbar brand -->
-    <a class="navbar-brand" routerLink="/admin/items">LabStock</a>
+    <a class="navbar-brand" routerLink="/admin/dashboard">LabStock</a>
 
     <!-- Toggle button -->
     <button
@@ -26,13 +26,31 @@
       <!-- Left links -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/admin/items">Home</a>
+          <a class="nav-link active" aria-current="page" routerLink="/admin/dashboard">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/admin/items">Items</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/admin/projects">Projetos</a>
+        </li>
+        <li class="nav-item" *ngIf="auth.isStudent()">
+          <a class="nav-link" routerLink="/admin/lendings/new">Solicitar Empréstimo</a>
+        </li>
+        <li class="nav-item" *ngIf="auth.isStudent()">
+          <a class="nav-link" routerLink="/admin/lendings/my">Meus Empréstimos</a>
+        </li>
+        <li class="nav-item" *ngIf="auth.isLab()">
+          <a class="nav-link" routerLink="/admin/lendings">Empréstimos</a>
+        </li>
+        <li class="nav-item" *ngIf="auth.isLab()">
+          <a class="nav-link" routerLink="/admin/damaged">Danos</a>
+        </li>
+        <li class="nav-item" *ngIf="auth.isLab()">
+          <a class="nav-link" routerLink="/admin/purchases">Compras</a>
+        </li>
+        <li class="nav-item" *ngIf="auth.isLab()">
+          <a class="nav-link" routerLink="/admin/users">Usuários</a>
         </li>
       </ul>
       <!-- Left links -->
@@ -64,6 +82,18 @@
             <i class="fas fa-user me-1"></i> Meu perfil
           </a>
           <ul class="dropdown-menu dropdown-menu-end" mdbDropdownMenu>
+            <li *ngIf="usuario">
+              <span class="dropdown-item-text">
+                <strong>{{ usuario.name }}</strong><br>
+                <small class="text-muted">{{ perfilDoUsuario }}</small>
+              </span>
+            </li>
+            <li *ngIf="usuario"><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item" routerLink="/admin/profile">
+                <i class="fas fa-user-edit me-2"></i> Editar perfil
+              </a>
+            </li>
             <li>
               <a class="dropdown-item" href="#" (click)="$event.preventDefault(); sair()">
                 <i class="fas fa-sign-out-alt me-2"></i> Sair
