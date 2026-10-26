@@ -17,7 +17,10 @@ export class MenuComponent {
   private router = inject(Router);
   auth = inject(AuthService);
 
-  usuario = this.auth.usuarioLogado();
+  // Lido a cada uso (e não guardado uma vez) para o nome mudar no menu quando o perfil for editado
+  get usuario() {
+    return this.auth.usuarioLogado();
+  }
 
   private rotulosPerfil: Record<string, string> = {
     STUDENT: 'Aluno',

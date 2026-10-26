@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../models/users';
+import { User, UpdateProfileRequest } from '../models/users';
 import { ApiResponse } from '../models/items';
 import { environment } from '../../environments/environment';
 
@@ -23,6 +23,10 @@ export class UserService {
 
   alterarRole(id: number, role: string): Observable<ApiResponse<User>> {
     return this.http.put<ApiResponse<User>>(`${this.baseUrl}/${id}/role`, { role });
+  }
+
+  atualizarPerfil(id: number, request: UpdateProfileRequest): Observable<ApiResponse<User>> {
+    return this.http.put<ApiResponse<User>>(`${this.baseUrl}/${id}/profile`, request);
   }
 
   excluir(id: number): Observable<ApiResponse<void>> {

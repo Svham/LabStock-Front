@@ -1,0 +1,53 @@
+<div class="container mt-4" style="max-width: 600px;">
+  <h2 class="mb-4">Meu Perfil</h2>
+
+  <div *ngIf="sucesso" class="alert alert-success">{{ sucesso }}</div>
+  <div *ngIf="erro" class="alert alert-danger">{{ erro }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+
+    <!-- Perfil (só leitura: quem muda é o laboratorista, na tela de Usuários) -->
+    <div class="mb-4">
+      <label class="form-label">Perfil de acesso</label>
+      <input type="text" class="form-control" [value]="perfilDoUsuario" disabled />
+    </div>
+
+    <!-- Nome -->
+    <div class="mb-4">
+      <label class="form-label" for="name">Nome</label>
+      <input type="text" id="name" class="form-control" formControlName="name" />
+      <small *ngIf="name?.touched && name?.invalid" class="text-danger">O nome deve ter entre 2 e 100 caracteres.</small>
+    </div>
+
+    <!-- E-mail -->
+    <div class="mb-4">
+      <label class="form-label" for="email">E-mail</label>
+      <input type="email" id="email" class="form-control" formControlName="email" />
+      <small *ngIf="email?.touched && email?.invalid" class="text-danger">Informe um e-mail válido.</small>
+    </div>
+
+    <!-- Senha (opcional) -->
+    <h5 class="mt-5 mb-3">Alterar senha <small class="text-muted">(opcional)</small></h5>
+
+    <div class="mb-4">
+      <label class="form-label" for="password">Nova senha</label>
+      <input type="password" id="password" class="form-control" formControlName="password" autocomplete="new-password" />
+      <small class="text-muted d-block">Deixe em branco para manter a senha atual.</small>
+      <small *ngIf="password?.touched && password?.invalid" class="text-danger">A senha deve ter entre 6 e 50 caracteres.</small>
+    </div>
+
+    <div class="mb-4">
+      <label class="form-label" for="confirmPassword">Confirmar nova senha</label>
+      <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" autocomplete="new-password" />
+      <small *ngIf="confirmPassword?.touched && senhasDiferentes" class="text-danger">As senhas não são iguais.</small>
+    </div>
+
+    <!-- Ações -->
+    <div class="d-flex justify-content-end gap-2 mt-4">
+      <button type="submit" class="btn btn-primary" mdbRipple [disabled]="salvando">
+        <i class="fas" [class.fa-spinner]="salvando" [class.fa-spin]="salvando" [class.fa-save]="!salvando"></i>
+        {{ salvando ? 'Salvando...' : 'Salvar alterações' }}
+      </button>
+    </div>
+  </form>
+</div>

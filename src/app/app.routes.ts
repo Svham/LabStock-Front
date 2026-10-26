@@ -13,13 +13,14 @@ import { DamagedregisterComponent } from './components/damaged/damagedregister/d
 import { PurchaseslistComponent } from './components/purchases/purchaseslist/purchaseslist.component';
 import { UserslistComponent } from './components/users/userslist/userslist.component';
 import { MylendingsComponent } from './components/lendings/mylendings/mylendings.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { authGuard, roleGuard } from './guards/auth.guard';
 
 // Quem pode entrar em cada tela (regra do guia do front):
 //   LAB      -> itens (cadastro/edição), empréstimos (gerenciar), danos, compras, usuários
 //   TEACHER  -> projetos (cadastro/edição)
 //   STUDENT  -> solicitar empréstimo e ver os próprios empréstimos
-//   Todos    -> listas de itens e de projetos
+//   Todos    -> listas de itens e de projetos e o próprio perfil
 export const routes: Routes = [
     {path : "", redirectTo: "login", pathMatch: "full"},
     {path : "login", component: LoginComponent},
@@ -38,6 +39,7 @@ export const routes: Routes = [
         {path: "damaged/new", component: DamagedregisterComponent, canActivate: [roleGuard('LAB')]},
         {path: "purchases", component: PurchaseslistComponent, canActivate: [roleGuard('LAB')]},
         {path: "users", component: UserslistComponent, canActivate: [roleGuard('LAB')]},
+        {path: "profile", component: ProfileComponent},
     ]},
     {path: "**", redirectTo: "login"}
 ];

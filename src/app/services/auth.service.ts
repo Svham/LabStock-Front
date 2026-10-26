@@ -40,6 +40,14 @@ export class AuthService {
     localStorage.removeItem(CHAVE_USUARIO);
   }
 
+  // Atualiza o usuário guardado (ex.: depois de editar o perfil), sem precisar logar de novo
+  atualizarUsuario(dados: Partial<UserResponse>): void {
+    if (!this.usuario) return;
+
+    this.usuario = { ...this.usuario, ...dados };
+    localStorage.setItem(CHAVE_USUARIO, JSON.stringify(this.usuario));
+  }
+
   usuarioLogado(): UserResponse | null {
     return this.usuario;
   }

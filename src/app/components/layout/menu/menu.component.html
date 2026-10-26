@@ -90,6 +90,11 @@
             </li>
             <li *ngIf="usuario"><hr class="dropdown-divider"></li>
             <li>
+              <a class="dropdown-item" routerLink="/admin/profile">
+                <i class="fas fa-user-edit me-2"></i> Editar perfil
+              </a>
+            </li>
+            <li>
               <a class="dropdown-item" href="#" (click)="$event.preventDefault(); sair()">
                 <i class="fas fa-sign-out-alt me-2"></i> Sair
               </a>
