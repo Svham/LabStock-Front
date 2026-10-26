@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import { ProjectService } from '../../../services/project.service';
+import { AuthService } from '../../../services/auth.service';
 import { Project } from '../../../models/projects';
 
 @Component({
@@ -20,7 +21,9 @@ export class ProjectslistComponent implements OnInit {
   carregando = false;
   filtroNome = '';
 
-  isTeacher = true; // TODO: pegar do AuthService depois
+  private auth = inject(AuthService);
+
+  isTeacher = this.auth.isTeacher();
 
   constructor(private projectService: ProjectService) {}
 

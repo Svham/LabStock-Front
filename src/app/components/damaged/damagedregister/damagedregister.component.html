@@ -27,14 +27,10 @@
       <small *ngIf="studentId?.touched && studentId?.invalid" class="text-danger">Selecione o aluno.</small>
     </div>
 
-    <!-- Laboratorista -->
+    <!-- Laboratorista (quem está logado) -->
     <div class="mb-4">
-      <label class="form-label" for="labId">Laboratorista responsável</label>
-      <select class="form-select" id="labId" formControlName="labId">
-        <option [ngValue]="null" disabled>Selecione o laboratorista</option>
-        <option *ngFor="let lab of laboratoristas" [ngValue]="lab.id">{{ lab.name }}</option>
-      </select>
-      <small *ngIf="labId?.touched && labId?.invalid" class="text-danger">Selecione o laboratorista.</small>
+      <label class="form-label">Laboratorista responsável</label>
+      <input type="text" class="form-control" [value]="laboratorista?.name" disabled />
     </div>
 
     <!-- Quantidade -->

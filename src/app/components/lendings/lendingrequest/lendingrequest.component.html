@@ -6,14 +6,10 @@
 
   <form [formGroup]="form" (ngSubmit)="solicitar()">
 
-    <!-- Aluno -->
+    <!-- Aluno (quem está logado) -->
     <div class="mb-4">
-      <label class="form-label" for="studentId">Aluno</label>
-      <select class="form-select" id="studentId" formControlName="studentId">
-        <option [ngValue]="null" disabled>Selecione o aluno</option>
-        <option *ngFor="let aluno of alunos" [ngValue]="aluno.id">{{ aluno.name }} ({{ aluno.email }})</option>
-      </select>
-      <small *ngIf="studentId?.touched && studentId?.invalid" class="text-danger">Selecione o aluno.</small>
+      <label class="form-label">Aluno</label>
+      <input type="text" class="form-control" [value]="aluno?.name + ' (' + aluno?.email + ')'" disabled />
     </div>
 
     <!-- Professor -->

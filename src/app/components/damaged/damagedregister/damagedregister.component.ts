@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import { ItemService } from '../../../services/item.service';
 import { UserService } from '../../../services/user.service';
 import { DamagedService } from '../../../services/damaged.service';
+import { AuthService } from '../../../services/auth.service';
 import { Item } from '../../../models/items';
 import { User } from '../../../models/users';
 import { DamagedRequest } from '../../../models/damaged';
@@ -21,9 +22,13 @@ import { DamagedRequest } from '../../../models/damaged';
 export class DamagedregisterComponent implements OnInit {
   form: FormGroup;
 
+  private auth = inject(AuthService);
+
+  // O laboratorista é sempre quem está logado (a tela só abre para o perfil LAB)
+  laboratorista = this.auth.usuarioLogado();
+
   itens: Item[] = [];
   alunos: User[] = [];
-  laboratoristas: User[] = [];
 
   salvando = false;
   erro = '';
@@ -38,8 +43,7 @@ export class DamagedregisterComponent implements OnInit {
     this.form = this.fb.group({
       itemId: [null, Validators.required],
       studentId: [null, Validators.required],
-      // TODO: quando o usuário logado for guardado no login, o laboratorista deixa de ser um select
-      labId: [null, Validators.required],
+      labId: [this.laboratorista?.id, Validators.required],
       // O pattern recusa motivo só com espaços (o backend também recusa)
       reason: ['', [Validators.required, Validators.pattern(/\S/)]],
       quantity: [1, [Validators.required, Validators.min(1)]]
@@ -65,7 +69,6 @@ export class DamagedregisterComponent implements OnInit {
     this.userService.listar().subscribe({
       next: (res) => {
         this.alunos = res.data.filter(u => u.role === 'STUDENT');
-        this.laboratoristas = res.data.filter(u => u.role === 'LAB');
       },
       error: (err) => console.error('Erro ao carregar usuários:', err)
     });
@@ -116,7 +119,6 @@ export class DamagedregisterComponent implements OnInit {
 
   get itemId() { return this.form.get('itemId'); }
   get studentId() { return this.form.get('studentId'); }
-  get labId() { return this.form.get('labId'); }
   get reason() { return this.form.get('reason'); }
   get quantity() { return this.form.get('quantity'); }
 }

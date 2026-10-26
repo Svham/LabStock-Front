@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
@@ -6,6 +6,7 @@ import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import { ItemService } from '../../../services/item.service';
 import { UserService } from '../../../services/user.service';
 import { LendingService } from '../../../services/lending.service';
+import { AuthService } from '../../../services/auth.service';
 import { Item } from '../../../models/items';
 import { User } from '../../../models/users';
 import { LendingRequest } from '../../../models/lendings';
@@ -20,8 +21,12 @@ import { LendingRequest } from '../../../models/lendings';
 export class LendingrequestComponent implements OnInit {
   form: FormGroup;
 
+  private auth = inject(AuthService);
+
+  // O aluno é sempre quem está logado (a tela só abre para o perfil STUDENT)
+  aluno = this.auth.usuarioLogado();
+
   itens: Item[] = [];
-  alunos: User[] = [];
   professores: User[] = [];
 
   salvando = false;
@@ -35,8 +40,7 @@ export class LendingrequestComponent implements OnInit {
     private lendingService: LendingService
   ) {
     this.form = this.fb.group({
-      // TODO: quando o usuário logado for guardado no login, o aluno deixa de ser um select
-      studentId: [null, Validators.required],
+      studentId: [this.aluno?.id, Validators.required],
       teacherId: [null, Validators.required],
       itemId: [null, Validators.required],
       quantity: [1, [Validators.required, Validators.min(1)]]
@@ -45,7 +49,7 @@ export class LendingrequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregarItens();
-    this.carregarUsuarios();
+    this.carregarProfessores();
   }
 
   carregarItens(): void {
@@ -58,13 +62,12 @@ export class LendingrequestComponent implements OnInit {
     });
   }
 
-  carregarUsuarios(): void {
+  carregarProfessores(): void {
     this.userService.listar().subscribe({
       next: (res) => {
-        this.alunos = res.data.filter(u => u.role === 'STUDENT');
         this.professores = res.data.filter(u => u.role === 'TEACHER');
       },
-      error: (err) => console.error('Erro ao carregar usuários:', err)
+      error: (err) => console.error('Erro ao carregar professores:', err)
     });
   }
 
@@ -93,7 +96,7 @@ export class LendingrequestComponent implements OnInit {
     this.lendingService.criar(dados).subscribe({
       next: (res) => {
         this.sucesso = `Empréstimo de ${res.data.quantity}x "${res.data.itemName}" solicitado! Aguardando aprovação do laboratório.`;
-        this.form.reset({ studentId: null, teacherId: null, itemId: null, quantity: 1 });
+        this.form.reset({ studentId: this.aluno?.id, teacherId: null, itemId: null, quantity: 1 });
         this.salvando = false;
         this.carregarItens();
       },
@@ -106,7 +109,6 @@ export class LendingrequestComponent implements OnInit {
     });
   }
 
-  get studentId() { return this.form.get('studentId'); }
   get teacherId() { return this.form.get('teacherId'); }
   get itemId() { return this.form.get('itemId'); }
   get quantity() { return this.form.get('quantity'); }

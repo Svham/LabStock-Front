@@ -1,10 +1,11 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 import { ItemService } from '../../../services/item.service';
+import { AuthService } from '../../../services/auth.service';
 import { Item, Categoria } from '../../../models/items';
 
 @Component({
@@ -27,7 +28,9 @@ export class ItemslistComponent implements OnInit {
   filtroCategoria: Categoria | '' = '';
   categorias = Object.values(Categoria);
 
-  isLab = true; // TODO: pegar do AuthService depois
+  private auth = inject(AuthService);
+
+  isLab = this.auth.isLab();
 
   constructor(private itemService: ItemService) {}
 

@@ -43,7 +43,7 @@
           <td>{{ usuario.email }}</td>
           <td style="min-width: 170px;">
             <select class="form-select form-select-sm"
-                    [disabled]="processandoId === usuario.id"
+                    [disabled]="processandoId === usuario.id || ehUsuarioLogado(usuario)"
                     (change)="alterarPerfil(usuario, $event)">
               <option *ngFor="let perfil of perfis" [value]="perfil.valor" [selected]="perfil.valor === usuario.role">
                 {{ perfil.rotulo }}
@@ -53,7 +53,7 @@
           <td>{{ usuario.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
           <td>
             <button class="btn btn-sm btn-outline-danger" mdbRipple
-                    [disabled]="processandoId === usuario.id" (click)="excluir(usuario)">
+                    [disabled]="processandoId === usuario.id || ehUsuarioLogado(usuario)" (click)="excluir(usuario)">
               Excluir
             </button>
           </td>

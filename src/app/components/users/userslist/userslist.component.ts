@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MdbRippleModule } from 'mdb-angular-ui-kit/ripple';
 
 import { UserService } from '../../../services/user.service';
+import { AuthService } from '../../../services/auth.service';
 import { User } from '../../../models/users';
 
 @Component({
@@ -30,7 +31,12 @@ export class UserslistComponent implements OnInit {
     { valor: 'LAB', rotulo: 'Laboratorista' }
   ];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private auth: AuthService) {}
+
+  // Ninguém pode mudar o próprio perfil nem se excluir (perderia o acesso a esta tela)
+  ehUsuarioLogado(usuario: User): boolean {
+    return usuario.id === this.auth.usuarioLogado()?.id;
+  }
 
   ngOnInit(): void {
     this.carregar();
